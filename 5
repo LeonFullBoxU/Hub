@@ -1,12 +1,12 @@
--- Create ScreenGui
+-- ScreenGui Creation
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = game:GetService("CoreGui")
 screenGui.Name = "ScriptsControlUI"
 
 -- Main Frame
 local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 350, 0, 450)
-mainFrame.Position = UDim2.new(0.5, -175, 0.5, -225)
+mainFrame.Size = UDim2.new(0, 400, 0, 500)
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -250)
 mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
@@ -15,7 +15,7 @@ mainFrame.Parent = screenGui
 
 -- Rounded Corners for Main Frame
 local mainCorner = Instance.new("UICorner")
-mainCorner.CornerRadius = UDim.new(0, 10)
+mainCorner.CornerRadius = UDim.new(0, 15)
 mainCorner.Parent = mainFrame
 
 -- Title Bar
@@ -25,6 +25,7 @@ titleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 titleBar.BorderSizePixel = 0
 titleBar.Parent = mainFrame
 
+-- Title Label
 local titleLabel = Instance.new("TextLabel")
 titleLabel.Size = UDim2.new(1, -100, 1, 0)
 titleLabel.Position = UDim2.new(0, 10, 0, 0)
@@ -37,19 +38,25 @@ titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.Parent = titleBar
 
 -- Minimize Button
-local minimizeButton = Instance.new("ImageButton")
-minimizeButton.Size = UDim2.new(0, 24, 0, 24)
-minimizeButton.Position = UDim2.new(1, -60, 0.5, -12)
-minimizeButton.Image = "rbxassetid://7072715800" -- Minimize Icon
-minimizeButton.BackgroundTransparency = 1
+local minimizeButton = Instance.new("TextButton")
+minimizeButton.Size = UDim2.new(0, 30, 0, 30)
+minimizeButton.Position = UDim2.new(1, -70, 0.5, -15)
+minimizeButton.Text = "-"
+minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+minimizeButton.Font = Enum.Font.GothamBold
+minimizeButton.TextSize = 20
+minimizeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 minimizeButton.Parent = titleBar
 
 -- Close Button
-local closeButton = Instance.new("ImageButton")
-closeButton.Size = UDim2.new(0, 24, 0, 24)
-closeButton.Position = UDim2.new(1, -30, 0.5, -12)
-closeButton.Image = "rbxassetid://7072715803" -- Close Icon
-closeButton.BackgroundTransparency = 1
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(1, -35, 0.5, -15)
+closeButton.Text = "X"
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Font = Enum.Font.GothamBold
+closeButton.TextSize = 20
+closeButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 closeButton.Parent = titleBar
 
 -- Scripts List Container
@@ -58,7 +65,7 @@ scriptsContainer.Size = UDim2.new(1, -20, 1, -60)
 scriptsContainer.Position = UDim2.new(0, 10, 0, 50)
 scriptsContainer.BackgroundTransparency = 1
 scriptsContainer.ScrollBarThickness = 4
-scriptsContainer.ScrollBarImageColor3 = Color3.fromRGB(80, 80, 80)
+scriptsContainer.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100)
 scriptsContainer.Parent = mainFrame
 
 local layout = Instance.new("UIListLayout")
@@ -67,16 +74,15 @@ layout.FillDirection = Enum.FillDirection.Vertical
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Parent = scriptsContainer
 
--- Helper Function to Create Toggles
+-- Helper Function for Toggles
 local function createToggle(scriptName)
     local toggleFrame = Instance.new("Frame")
     toggleFrame.Size = UDim2.new(1, 0, 0, 50)
-    toggleFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    toggleFrame.BorderSizePixel = 0
+    toggleFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     toggleFrame.Parent = scriptsContainer
 
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
+    corner.CornerRadius = UDim.new(0, 10)
     corner.Parent = toggleFrame
 
     local scriptLabel = Instance.new("TextLabel")
@@ -127,14 +133,15 @@ for _, script in ipairs(scripts) do
     createToggle(script)
 end
 
--- Minimize and Close Functionality
+-- Minimize Functionality
 local isMinimized = false
 minimizeButton.MouseButton1Click:Connect(function()
     isMinimized = not isMinimized
     scriptsContainer.Visible = not isMinimized
-    mainFrame.Size = isMinimized and UDim2.new(0, 350, 0, 40) or UDim2.new(0, 350, 0, 450)
+    mainFrame.Size = isMinimized and UDim2.new(0, 400, 0, 40) or UDim2.new(0, 400, 0, 500)
 end)
 
+-- Close Button Functionality
 closeButton.MouseButton1Click:Connect(function()
     screenGui:Destroy()
 end)
