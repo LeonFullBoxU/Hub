@@ -1,0 +1,147 @@
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.Name = "ScriptGui"
+
+-- Create Main Frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 350, 0, 400)
+mainFrame.Position = UDim2.new(0.5, -175, 0.5, -200)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
+mainFrame.Parent = screenGui
+
+-- Apply rounded corners to the main frame
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 10)
+uiCorner.Parent = mainFrame
+
+-- Add shadow effect
+local shadow = Instance.new("ImageLabel")
+shadow.Size = UDim2.new(1, 20, 1, 20)
+shadow.Position = UDim2.new(0, -10, 0, -10)
+shadow.Image = "rbxassetid://1316045217"
+shadow.ImageColor3 = Color3.new(0, 0, 0)
+shadow.ImageTransparency = 0.5
+shadow.ScaleType = Enum.ScaleType.Slice
+shadow.SliceCenter = Rect.new(10, 10, 118, 118)
+shadow.BackgroundTransparency = 1
+shadow.ZIndex = 0
+shadow.Parent = mainFrame
+
+-- Create Title Bar
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, 40)
+titleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+titleBar.BorderSizePixel = 0
+titleBar.Parent = mainFrame
+
+local titleBarCorner = Instance.new("UICorner")
+titleBarCorner.CornerRadius = UDim.new(0, 10)
+titleBarCorner.Parent = titleBar
+
+-- Create Title Label
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, -50, 1, 0)
+titleLabel.Position = UDim2.new(0, 10, 0, 0)
+titleLabel.Text = "Scripts Control"
+titleLabel.TextColor3 = Color3.new(1, 1, 1)
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 18
+titleLabel.BackgroundTransparency = 1
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+titleLabel.Parent = titleBar
+
+-- Create Minimize Button
+local minimizeButton = Instance.new("TextButton")
+minimizeButton.Size = UDim2.new(0, 30, 0, 30)
+minimizeButton.Position = UDim2.new(1, -40, 0.5, -15)
+minimizeButton.Text = ""
+minimizeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+minimizeButton.BorderSizePixel = 0
+minimizeButton.Parent = titleBar
+
+local minimizeCorner = Instance.new("UICorner")
+minimizeCorner.CornerRadius = UDim.new(1, 0)
+minimizeCorner.Parent = minimizeButton
+
+local minimizeIcon = Instance.new("ImageLabel")
+minimizeIcon.Size = UDim2.new(0.6, 0, 0.6, 0)
+minimizeIcon.Position = UDim2.new(0.2, 0, 0.2, 0)
+minimizeIcon.Image = "rbxassetid://7072706622"
+minimizeIcon.BackgroundTransparency = 1
+minimizeIcon.Parent = minimizeButton
+
+-- Create Scripts Container
+local scriptsContainer = Instance.new("Frame")
+scriptsContainer.Size = UDim2.new(1, -20, 1, -60)
+scriptsContainer.Position = UDim2.new(0, 10, 0, 50)
+scriptsContainer.BackgroundTransparency = 1
+scriptsContainer.Parent = mainFrame
+
+-- Add UIListLayout for organized layout
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 10)
+layout.FillDirection = Enum.FillDirection.Vertical
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Parent = scriptsContainer
+
+-- Create Checkbox Function
+local function createCheckbox(name)
+    local container = Instance.new("Frame")
+    container.Size = UDim2.new(1, 0, 0, 50)
+    container.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    container.BorderSizePixel = 0
+    container.Parent = scriptsContainer
+
+    local containerCorner = Instance.new("UICorner")
+    containerCorner.CornerRadius = UDim.new(0, 10)
+    containerCorner.Parent = container
+
+    local checkbox = Instance.new("TextButton")
+    checkbox.Size = UDim2.new(0, 40, 0, 40)
+    checkbox.Position = UDim2.new(0, 5, 0.5, -20)
+    checkbox.Text = ""
+    checkbox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    checkbox.BorderSizePixel = 0
+    checkbox.Parent = container
+
+    local checkboxCorner = Instance.new("UICorner")
+    checkboxCorner.CornerRadius = UDim.new(1, 0)
+    checkboxCorner.Parent = checkbox
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, -60, 1, 0)
+    label.Position = UDim2.new(0, 60, 0, 0)
+    label.Text = name
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.Font = Enum.Font.SourceSans
+    label.TextSize = 16
+    label.BackgroundTransparency = 1
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.Parent = container
+
+    local toggled = false
+    checkbox.MouseButton1Click:Connect(function()
+        toggled = not toggled
+        checkbox.BackgroundColor3 = toggled and Color3.fromRGB(0, 122, 255) or Color3.fromRGB(60, 60, 60)
+        -- Replace this with your script logic
+        print(name .. " toggled: " .. tostring(toggled))
+    end)
+end
+
+-- Add 6 Checkboxes
+local scriptNames = {"Script 1", "Script 2", "Script 3", "Script 4", "Script 5", "Script 6"}
+for _, name in ipairs(scriptNames) do
+    createCheckbox(name)
+end
+
+-- Minimize functionality
+local minimized = false
+minimizeButton.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    scriptsContainer.Visible = not minimized
+    minimizeIcon.Image = minimized and "rbxassetid://7072706623" or "rbxassetid://7072706622"
+end)
