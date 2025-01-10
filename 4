@@ -120,7 +120,7 @@ local function createCheckbox(name)
     checkbox.Size = UDim2.new(0, 40, 0, 40)
     checkbox.Position = UDim2.new(0, 5, 0.5, -20)
     checkbox.Text = ""
-    checkbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    checkbox.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
     checkbox.BorderSizePixel = 0
     checkbox.Parent = container
 
@@ -142,7 +142,7 @@ local function createCheckbox(name)
     local toggled = false
     checkbox.MouseButton1Click:Connect(function()
         toggled = not toggled
-        checkbox.BackgroundColor3 = toggled and Color3.fromRGB(0, 122, 255) or Color3.fromRGB(255, 255, 255)
+        checkbox.BackgroundColor3 = toggled and Color3.fromRGB(255, 165, 0) or Color3.fromRGB(200, 200, 200)
         -- Replace this with your script logic
         print(name .. " toggled: " .. tostring(toggled))
     end)
@@ -159,7 +159,7 @@ local minimized = false
 minimizeButton.MouseButton1Click:Connect(function()
     minimized = not minimized
     scriptsContainer.Visible = not minimized
-    mainFrame.Size = minimized and UDim2.new(0, 350, 0, 60) or UDim2.new(0, 350, 0, 400)
+    mainFrame.Size = minimized and UDim2.new(0, 350, 0, 40) or UDim2.new(0, 350, 0, 400)
     minimizeIcon.Image = minimized and "rbxassetid://7072706623" or "rbxassetid://7072706622"
 end)
 
