@@ -1,6 +1,6 @@
 -- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.Parent = game:GetService("CoreGui")
 screenGui.Name = "ScriptGui"
 
 -- Create Main Frame
@@ -44,7 +44,7 @@ titleBarCorner.Parent = titleBar
 
 -- Create Title Label
 local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(1, -50, 1, 0)
+titleLabel.Size = UDim2.new(1, -90, 1, 0)
 titleLabel.Position = UDim2.new(0, 10, 0, 0)
 titleLabel.Text = "Scripts Control"
 titleLabel.TextColor3 = Color3.new(1, 1, 1)
@@ -57,7 +57,7 @@ titleLabel.Parent = titleBar
 -- Create Minimize Button
 local minimizeButton = Instance.new("TextButton")
 minimizeButton.Size = UDim2.new(0, 30, 0, 30)
-minimizeButton.Position = UDim2.new(1, -40, 0.5, -15)
+minimizeButton.Position = UDim2.new(1, -80, 0.5, -15)
 minimizeButton.Text = ""
 minimizeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 minimizeButton.BorderSizePixel = 0
@@ -73,6 +73,26 @@ minimizeIcon.Position = UDim2.new(0.2, 0, 0.2, 0)
 minimizeIcon.Image = "rbxassetid://7072706622"
 minimizeIcon.BackgroundTransparency = 1
 minimizeIcon.Parent = minimizeButton
+
+-- Create Close Button
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(1, -40, 0.5, -15)
+closeButton.Text = ""
+closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+closeButton.BorderSizePixel = 0
+closeButton.Parent = titleBar
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(1, 0)
+closeCorner.Parent = closeButton
+
+local closeIcon = Instance.new("ImageLabel")
+closeIcon.Size = UDim2.new(0.6, 0, 0.6, 0)
+closeIcon.Position = UDim2.new(0.2, 0, 0.2, 0)
+closeIcon.Image = "rbxassetid://7072706624"
+closeIcon.BackgroundTransparency = 1
+closeIcon.Parent = closeButton
 
 -- Create Scripts Container
 local scriptsContainer = Instance.new("Frame")
@@ -104,7 +124,7 @@ local function createCheckbox(name)
     checkbox.Size = UDim2.new(0, 40, 0, 40)
     checkbox.Position = UDim2.new(0, 5, 0.5, -20)
     checkbox.Text = ""
-    checkbox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    checkbox.BackgroundColor3 = Color3.fromRGB(0, 122, 255)
     checkbox.BorderSizePixel = 0
     checkbox.Parent = container
 
@@ -143,5 +163,11 @@ local minimized = false
 minimizeButton.MouseButton1Click:Connect(function()
     minimized = not minimized
     scriptsContainer.Visible = not minimized
+    mainFrame.Size = minimized and UDim2.new(0, 350, 0, 60) or UDim2.new(0, 350, 0, 400)
     minimizeIcon.Image = minimized and "rbxassetid://7072706623" or "rbxassetid://7072706622"
+end)
+
+-- Close functionality
+closeButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
 end)
