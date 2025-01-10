@@ -1,0 +1,140 @@
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game:GetService("CoreGui")
+screenGui.Name = "ScriptsControlUI"
+
+-- Main Frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 350, 0, 450)
+mainFrame.Position = UDim2.new(0.5, -175, 0.5, -225)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
+mainFrame.Parent = screenGui
+
+-- Rounded Corners for Main Frame
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 10)
+mainCorner.Parent = mainFrame
+
+-- Title Bar
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, 40)
+titleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+titleBar.BorderSizePixel = 0
+titleBar.Parent = mainFrame
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, -100, 1, 0)
+titleLabel.Position = UDim2.new(0, 10, 0, 0)
+titleLabel.Text = "Scripts Control"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.TextSize = 16
+titleLabel.BackgroundTransparency = 1
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+titleLabel.Parent = titleBar
+
+-- Minimize Button
+local minimizeButton = Instance.new("ImageButton")
+minimizeButton.Size = UDim2.new(0, 24, 0, 24)
+minimizeButton.Position = UDim2.new(1, -60, 0.5, -12)
+minimizeButton.Image = "rbxassetid://7072715800" -- Minimize Icon
+minimizeButton.BackgroundTransparency = 1
+minimizeButton.Parent = titleBar
+
+-- Close Button
+local closeButton = Instance.new("ImageButton")
+closeButton.Size = UDim2.new(0, 24, 0, 24)
+closeButton.Position = UDim2.new(1, -30, 0.5, -12)
+closeButton.Image = "rbxassetid://7072715803" -- Close Icon
+closeButton.BackgroundTransparency = 1
+closeButton.Parent = titleBar
+
+-- Scripts List Container
+local scriptsContainer = Instance.new("ScrollingFrame")
+scriptsContainer.Size = UDim2.new(1, -20, 1, -60)
+scriptsContainer.Position = UDim2.new(0, 10, 0, 50)
+scriptsContainer.BackgroundTransparency = 1
+scriptsContainer.ScrollBarThickness = 4
+scriptsContainer.ScrollBarImageColor3 = Color3.fromRGB(80, 80, 80)
+scriptsContainer.Parent = mainFrame
+
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 12)
+layout.FillDirection = Enum.FillDirection.Vertical
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Parent = scriptsContainer
+
+-- Helper Function to Create Toggles
+local function createToggle(scriptName)
+    local toggleFrame = Instance.new("Frame")
+    toggleFrame.Size = UDim2.new(1, 0, 0, 50)
+    toggleFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    toggleFrame.BorderSizePixel = 0
+    toggleFrame.Parent = scriptsContainer
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 8)
+    corner.Parent = toggleFrame
+
+    local scriptLabel = Instance.new("TextLabel")
+    scriptLabel.Size = UDim2.new(1, -80, 1, 0)
+    scriptLabel.Position = UDim2.new(0, 10, 0, 0)
+    scriptLabel.Text = scriptName
+    scriptLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    scriptLabel.Font = Enum.Font.Gotham
+    scriptLabel.TextSize = 14
+    scriptLabel.BackgroundTransparency = 1
+    scriptLabel.TextXAlignment = Enum.TextXAlignment.Left
+    scriptLabel.Parent = toggleFrame
+
+    -- Toggle Button
+    local toggleButton = Instance.new("Frame")
+    toggleButton.Size = UDim2.new(0, 50, 0, 25)
+    toggleButton.Position = UDim2.new(1, -70, 0.5, -12)
+    toggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    toggleButton.Parent = toggleFrame
+
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(1, 0)
+    buttonCorner.Parent = toggleButton
+
+    local indicator = Instance.new("Frame")
+    indicator.Size = UDim2.new(0, 20, 0, 20)
+    indicator.Position = UDim2.new(0, 2, 0.5, -10)
+    indicator.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+    indicator.Parent = toggleButton
+
+    local indicatorCorner = Instance.new("UICorner")
+    indicatorCorner.CornerRadius = UDim.new(1, 0)
+    indicatorCorner.Parent = indicator
+
+    local isOn = false
+    toggleButton.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            isOn = not isOn
+            toggleButton.BackgroundColor3 = isOn and Color3.fromRGB(0, 200, 0) or Color3.fromRGB(100, 100, 100)
+            indicator.Position = isOn and UDim2.new(1, -22, 0.5, -10) or UDim2.new(0, 2, 0.5, -10)
+        end
+    end)
+end
+
+-- Add Toggles for Scripts
+local scripts = {"Script 1", "Script 2", "Script 3", "Script 4", "Script 5", "Script 6"}
+for _, script in ipairs(scripts) do
+    createToggle(script)
+end
+
+-- Minimize and Close Functionality
+local isMinimized = false
+minimizeButton.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    scriptsContainer.Visible = not isMinimized
+    mainFrame.Size = isMinimized and UDim2.new(0, 350, 0, 40) or UDim2.new(0, 350, 0, 450)
+end)
+
+closeButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
