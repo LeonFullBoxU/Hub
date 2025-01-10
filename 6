@@ -5,140 +5,124 @@ screenGui.Name = "ScriptGui"
 
 -- Create Main Frame
 local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 300, 0, 350)
-mainFrame.Position = UDim2.new(0.5, -150, 0.5, -175)
-mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+mainFrame.Size = UDim2.new(0, 350, 0, 400)
+mainFrame.Position = UDim2.new(0.5, -175, 0.5, -200)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
 mainFrame.Draggable = true
 mainFrame.Parent = screenGui
 
--- Apply rounded corners to the main frame
+-- Apply rounded corners
 local uiCorner = Instance.new("UICorner")
-uiCorner.CornerRadius = UDim.new(0, 8)
+uiCorner.CornerRadius = UDim.new(0, 10)
 uiCorner.Parent = mainFrame
 
--- Create Title Bar
+-- Title Bar
 local titleBar = Instance.new("Frame")
-titleBar.Size = UDim2.new(1, 0, 0, 30)
-titleBar.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+titleBar.Size = UDim2.new(1, 0, 0, 40)
+titleBar.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 titleBar.BorderSizePixel = 0
 titleBar.Parent = mainFrame
 
 local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(1, -60, 1, 0)
+titleLabel.Size = UDim2.new(1, -80, 1, 0)
 titleLabel.Position = UDim2.new(0, 10, 0, 0)
 titleLabel.Text = "Scripts Control"
-titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-titleLabel.Font = Enum.Font.SourceSansBold
-titleLabel.TextSize = 18
+titleLabel.TextColor3 = Color3.new(1, 1, 1)
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.TextSize = 16
 titleLabel.BackgroundTransparency = 1
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.Parent = titleBar
 
--- Create Minimize Button
-local minimizeButton = Instance.new("TextButton")
+-- Minimize Button
+local minimizeButton = Instance.new("ImageButton")
 minimizeButton.Size = UDim2.new(0, 30, 0, 30)
-minimizeButton.Position = UDim2.new(1, -60, 0, 0)
-minimizeButton.Text = "−"
-minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-minimizeButton.Font = Enum.Font.SourceSansBold
-minimizeButton.TextSize = 20
-minimizeButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-minimizeButton.BorderSizePixel = 0
+minimizeButton.Position = UDim2.new(1, -70, 0.5, -15)
+minimizeButton.Image = "rbxassetid://7072715800" -- Minimize Icon
+minimizeButton.BackgroundTransparency = 1
 minimizeButton.Parent = titleBar
 
-local minimizeCorner = Instance.new("UICorner")
-minimizeCorner.CornerRadius = UDim.new(0, 5)
-minimizeCorner.Parent = minimizeButton
-
--- Create Close Button
-local closeButton = Instance.new("TextButton")
+-- Close Button
+local closeButton = Instance.new("ImageButton")
 closeButton.Size = UDim2.new(0, 30, 0, 30)
-closeButton.Position = UDim2.new(1, -30, 0, 0)
-closeButton.Text = "X"
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.Font = Enum.Font.SourceSansBold
-closeButton.TextSize = 18
-closeButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-closeButton.BorderSizePixel = 0
+closeButton.Position = UDim2.new(1, -40, 0.5, -15)
+closeButton.Image = "rbxassetid://7072715803" -- Close Icon
+closeButton.BackgroundTransparency = 1
 closeButton.Parent = titleBar
 
-local closeCorner = Instance.new("UICorner")
-closeCorner.CornerRadius = UDim.new(0, 5)
-closeCorner.Parent = closeButton
-
--- Create Scripts Container
+-- Scripts Container
 local scriptsContainer = Instance.new("Frame")
-scriptsContainer.Size = UDim2.new(1, -20, 1, -40)
-scriptsContainer.Position = UDim2.new(0, 10, 0, 40)
+scriptsContainer.Size = UDim2.new(1, -20, 1, -60)
+scriptsContainer.Position = UDim2.new(0, 10, 0, 50)
 scriptsContainer.BackgroundTransparency = 1
 scriptsContainer.Parent = mainFrame
 
 local layout = Instance.new("UIListLayout")
-layout.Padding = UDim.new(0, 8)
+layout.Padding = UDim.new(0, 10)
 layout.FillDirection = Enum.FillDirection.Vertical
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Parent = scriptsContainer
 
--- Create Checkbox Function
-local function createCheckbox(name)
+-- Create Toggle Switch Function
+local function createToggleSwitch(name)
     local container = Instance.new("Frame")
     container.Size = UDim2.new(1, 0, 0, 40)
-    container.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    container.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     container.BorderSizePixel = 0
     container.Parent = scriptsContainer
 
     local containerCorner = Instance.new("UICorner")
-    containerCorner.CornerRadius = UDim.new(0, 5)
+    containerCorner.CornerRadius = UDim.new(0, 10)
     containerCorner.Parent = container
 
-    local checkbox = Instance.new("TextButton")
-    checkbox.Size = UDim2.new(0, 30, 0, 30)
-    checkbox.Position = UDim2.new(0, 5, 0.5, -15)
-    checkbox.Text = ""
-    checkbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-    checkbox.BorderSizePixel = 0
-    checkbox.Parent = container
-
-    local checkboxCorner = Instance.new("UICorner")
-    checkboxCorner.CornerRadius = UDim.new(1, 0)
-    checkboxCorner.Parent = checkbox
-
     local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -50, 1, 0)
-    label.Position = UDim2.new(0, 50, 0, 0)
+    label.Size = UDim2.new(1, -60, 1, 0)
+    label.Position = UDim2.new(0, 10, 0, 0)
     label.Text = name
-    label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.Font = Enum.Font.SourceSans
-t label.TextSize = 16
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.Font = Enum.Font.Gotham
+    label.TextSize = 14
     label.BackgroundTransparency = 1
     label.TextXAlignment = Enum.TextXAlignment.Left
     label.Parent = container
 
+    local toggle = Instance.new("TextButton")
+    toggle.Size = UDim2.new(0, 50, 0, 20)
+    toggle.Position = UDim2.new(1, -60, 0.5, -10)
+    toggle.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+    toggle.Text = ""
+    toggle.BorderSizePixel = 0
+    toggle.Parent = container
+
+    local toggleCorner = Instance.new("UICorner")
+    toggleCorner.CornerRadius = UDim.new(1, 0)
+    toggleCorner.Parent = toggle
+
     local toggled = false
-    checkbox.MouseButton1Click:Connect(function()
+    toggle.MouseButton1Click:Connect(function()
         toggled = not toggled
-        checkbox.BackgroundColor3 = toggled and Color3.fromRGB(255, 165, 0) or Color3.fromRGB(100, 100, 100)
+        toggle.BackgroundColor3 = toggled and Color3.fromRGB(0, 200, 0) or Color3.fromRGB(200, 200, 200)
         print(name .. " toggled: " .. tostring(toggled))
     end)
 end
 
--- Add Checkboxes
+-- Add 6 Toggles
 local scriptNames = {"Script 1", "Script 2", "Script 3", "Script 4", "Script 5", "Script 6"}
 for _, name in ipairs(scriptNames) do
-    createCheckbox(name)
+    createToggleSwitch(name)
 end
 
--- Minimize Functionality
+-- Minimize functionality
 local minimized = false
 minimizeButton.MouseButton1Click:Connect(function()
     minimized = not minimized
     scriptsContainer.Visible = not minimized
-    mainFrame.Size = minimized and UDim2.new(0, 300, 0, 30) or UDim2.new(0, 300, 0, 350)
+    mainFrame.Size = minimized and UDim2.new(0, 350, 0, 40) or UDim2.new(0, 350, 0, 400)
 end)
 
--- Close Functionality
+-- Close functionality
 closeButton.MouseButton1Click:Connect(function()
     screenGui:Destroy()
 end)
