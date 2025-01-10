@@ -1,27 +1,27 @@
 -- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = game:GetService("CoreGui")
-screenGui.Name = "ScriptGui"
+screenGui.Name = "ModernScriptGui"
 
 -- Create Main Frame
 local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 350, 0, 400)
-mainFrame.Position = UDim2.new(0.5, -175, 0.5, -200)
-mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.Size = UDim2.new(0, 320, 0, 400)
+mainFrame.Position = UDim2.new(0.5, -160, 0.5, -200)
+mainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
 mainFrame.Draggable = true
 mainFrame.Parent = screenGui
 
--- Apply rounded corners
+-- Rounded Corners for Main Frame
 local uiCorner = Instance.new("UICorner")
-uiCorner.CornerRadius = UDim.new(0, 10)
+uiCorner.CornerRadius = UDim.new(0, 8)
 uiCorner.Parent = mainFrame
 
 -- Title Bar
 local titleBar = Instance.new("Frame")
-titleBar.Size = UDim2.new(1, 0, 0, 40)
-titleBar.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+titleBar.Size = UDim2.new(1, 0, 0, 36)
+titleBar.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 titleBar.BorderSizePixel = 0
 titleBar.Parent = mainFrame
 
@@ -31,32 +31,34 @@ titleLabel.Position = UDim2.new(0, 10, 0, 0)
 titleLabel.Text = "Scripts Control"
 titleLabel.TextColor3 = Color3.new(1, 1, 1)
 titleLabel.Font = Enum.Font.GothamBold
-titleLabel.TextSize = 16
+titleLabel.TextSize = 14
 titleLabel.BackgroundTransparency = 1
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.Parent = titleBar
 
 -- Minimize Button
 local minimizeButton = Instance.new("ImageButton")
-minimizeButton.Size = UDim2.new(0, 30, 0, 30)
-minimizeButton.Position = UDim2.new(1, -70, 0.5, -15)
+minimizeButton.Size = UDim2.new(0, 24, 0, 24)
+minimizeButton.Position = UDim2.new(1, -60, 0.5, -12)
 minimizeButton.Image = "rbxassetid://7072715800" -- Minimize Icon
 minimizeButton.BackgroundTransparency = 1
 minimizeButton.Parent = titleBar
 
 -- Close Button
 local closeButton = Instance.new("ImageButton")
-closeButton.Size = UDim2.new(0, 30, 0, 30)
-closeButton.Position = UDim2.new(1, -40, 0.5, -15)
+closeButton.Size = UDim2.new(0, 24, 0, 24)
+closeButton.Position = UDim2.new(1, -30, 0.5, -12)
 closeButton.Image = "rbxassetid://7072715803" -- Close Icon
 closeButton.BackgroundTransparency = 1
 closeButton.Parent = titleBar
 
 -- Scripts Container
-local scriptsContainer = Instance.new("Frame")
-scriptsContainer.Size = UDim2.new(1, -20, 1, -60)
-scriptsContainer.Position = UDim2.new(0, 10, 0, 50)
+local scriptsContainer = Instance.new("ScrollingFrame")
+scriptsContainer.Size = UDim2.new(1, -20, 1, -50)
+scriptsContainer.Position = UDim2.new(0, 10, 0, 40)
 scriptsContainer.BackgroundTransparency = 1
+scriptsContainer.ScrollBarThickness = 4
+scriptsContainer.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100)
 scriptsContainer.Parent = mainFrame
 
 local layout = Instance.new("UIListLayout")
@@ -65,20 +67,20 @@ layout.FillDirection = Enum.FillDirection.Vertical
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Parent = scriptsContainer
 
--- Create Toggle Switch Function
-local function createToggleSwitch(name)
+-- Create Toggle Function
+local function createToggle(name)
     local container = Instance.new("Frame")
-    container.Size = UDim2.new(1, 0, 0, 40)
-    container.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    container.Size = UDim2.new(1, 0, 0, 36)
+    container.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     container.BorderSizePixel = 0
     container.Parent = scriptsContainer
 
     local containerCorner = Instance.new("UICorner")
-    containerCorner.CornerRadius = UDim.new(0, 10)
+    containerCorner.CornerRadius = UDim.new(0, 6)
     containerCorner.Parent = container
 
     local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -60, 1, 0)
+    label.Size = UDim2.new(1, -70, 1, 0)
     label.Position = UDim2.new(0, 10, 0, 0)
     label.Text = name
     label.TextColor3 = Color3.new(1, 1, 1)
@@ -88,41 +90,51 @@ local function createToggleSwitch(name)
     label.TextXAlignment = Enum.TextXAlignment.Left
     label.Parent = container
 
-    local toggle = Instance.new("TextButton")
-    toggle.Size = UDim2.new(0, 50, 0, 20)
-    toggle.Position = UDim2.new(1, -60, 0.5, -10)
+    local toggle = Instance.new("Frame")
+    toggle.Size = UDim2.new(0, 40, 0, 20)
+    toggle.Position = UDim2.new(1, -50, 0.5, -10)
     toggle.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-    toggle.Text = ""
-    toggle.BorderSizePixel = 0
     toggle.Parent = container
 
     local toggleCorner = Instance.new("UICorner")
     toggleCorner.CornerRadius = UDim.new(1, 0)
     toggleCorner.Parent = toggle
 
+    local indicator = Instance.new("Frame")
+    indicator.Size = UDim2.new(0, 16, 0, 16)
+    indicator.Position = UDim2.new(0, 2, 0, 2)
+    indicator.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    indicator.Parent = toggle
+
+    local indicatorCorner = Instance.new("UICorner")
+    indicatorCorner.CornerRadius = UDim.new(1, 0)
+    indicatorCorner.Parent = indicator
+
     local toggled = false
-    toggle.MouseButton1Click:Connect(function()
-        toggled = not toggled
-        toggle.BackgroundColor3 = toggled and Color3.fromRGB(0, 200, 0) or Color3.fromRGB(200, 200, 200)
-        print(name .. " toggled: " .. tostring(toggled))
+    toggle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            toggled = not toggled
+            toggle.BackgroundColor3 = toggled and Color3.fromRGB(0, 200, 0) or Color3.fromRGB(200, 200, 200)
+            indicator.Position = toggled and UDim2.new(1, -18, 0, 2) or UDim2.new(0, 2, 0, 2)
+        end
     end)
 end
 
--- Add 6 Toggles
+-- Add Toggles
 local scriptNames = {"Script 1", "Script 2", "Script 3", "Script 4", "Script 5", "Script 6"}
 for _, name in ipairs(scriptNames) do
-    createToggleSwitch(name)
+    createToggle(name)
 end
 
--- Minimize functionality
+-- Minimize Functionality
 local minimized = false
 minimizeButton.MouseButton1Click:Connect(function()
     minimized = not minimized
     scriptsContainer.Visible = not minimized
-    mainFrame.Size = minimized and UDim2.new(0, 350, 0, 40) or UDim2.new(0, 350, 0, 400)
+    mainFrame.Size = minimized and UDim2.new(0, 320, 0, 36) or UDim2.new(0, 320, 0, 400)
 end)
 
--- Close functionality
+-- Close Functionality
 closeButton.MouseButton1Click:Connect(function()
     screenGui:Destroy()
 end)
